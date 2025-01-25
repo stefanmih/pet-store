@@ -1,0 +1,116 @@
+export let initialReservations = [
+  {
+    id: "123456",
+    userId: 1,
+    pets: [
+      {
+        id: 4,
+        name: "Coco",
+        type: "Papagaj",
+        age: 4,
+        size: "Mali",
+        price: 5000,
+        origin: "Brazil",
+      },
+      {
+        id: 10,
+        name: "Sunny",
+        type: "Kanarinac",
+        age: 1,
+        size: "Mali",
+        price: 2500,
+        origin: "Španija",
+      },
+    ],
+    status: "preuzeto",
+  },
+  {
+    id: "789101",
+    userId: 2,
+    pets: [
+      {
+        id: 13,
+        name: "Tommy",
+        type: "Pas",
+        age: 1,
+        size: "Mali",
+        price: 11000,
+        origin: "Mađarska",
+      },
+    ],
+    status: "u toku",
+  },
+  {
+    id: "112233",
+    userId: 3,
+    pets: [
+      {
+        id: 3,
+        name: "Rex",
+        type: "Pas",
+        age: 3,
+        size: "Veliki",
+        price: 20000,
+        origin: "Nemačka",
+      },
+      {
+        id: 2,
+        name: "Milo",
+        type: "Mačka",
+        age: 2,
+        size: "Mali",
+        price: 9000,
+        origin: "Italija",
+      },
+    ],
+    status: "preuzeto",
+  },
+  {
+    id: "445566",
+    userId: 1,
+    pets: [
+      {
+        id: 7,
+        name: "Max",
+        type: "Pas",
+        age: 2,
+        size: "Veliki",
+        price: 18000,
+        origin: "Kanada",
+      },
+    ],
+    status: "preuzeto",
+  },
+  {
+    id: "778899",
+    userId: 2,
+    pets: [
+      {
+        id: 5,
+        name: "Bunny",
+        type: "Zec",
+        age: 1,
+        size: "Mali",
+        price: 3000,
+        origin: "Srbija",
+      },
+    ],
+    status: "u toku",
+  },
+  {
+    id: "990011",
+    userId: 3,
+    pets: [
+      {
+        id: 15,
+        name: "Charlie",
+        type: "Pas",
+        age: 5,
+        size: "Srednji",
+        price: 16000,
+        origin: "Engleska",
+      },
+    ],
+    status: "u toku",
+  },
+];

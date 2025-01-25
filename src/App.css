@@ -1,0 +1,130 @@
+/* App.css */
+
+/* Globalni stilovi */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f5f5f5;
+}
+
+/* Stil za AppBar (gornja traka) */
+.MuiAppBar-root {
+  background-color: #1976d2; /* Plava boja */
+}
+
+/* Stil za Drawer (bočni meni) */
+.MuiDrawer-root {
+  width: 240px;
+  flex-shrink: 0;
+}
+
+.MuiDrawer-paper {
+  width: 240px;
+  background-color: #ffffff;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Stil za ListItemButton u Drawer */
+.MuiListItemButton-root {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/* Stil za linkove unutar menija */
+.MuiListItemText-root a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Stil za glavnu sekciju */
+main {
+  padding: 20px;
+  flex-grow: 1;
+  background-color: #ffffff;
+  margin-left: 240px; /* Udaljenost od bočnog menija */
+  transition: margin-left 0.3s;
+}
+
+/* Stil za kontener kada je meni zatvoren */
+.MuiDrawer-docked {
+  display: none;
+}
+
+.MuiBox-root {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+}
+
+/* Stil za linkove u Headeru */
+h1 {
+  flex-grow: 1;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+/* Dodajte padding i marginu na stranice */
+.page-content {
+  margin-top: 64px; /* Da bi se sadržaj video ispod AppBar-a */
+  padding: 20px;
+}
+
+/* Stil za linkove unutar stranica */
+a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Stil za login stranu - dodato u app.css */
+
+/* Celokupni kontejner za login stranu */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+
+/* Stil za formu na login stranici */
+.login-form {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Naslov unutar forme */
+.login-form h4 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 24px;
+}
+
+/* Razmak između input polja */
+.login-form .MuiTextField-root {
+  margin-bottom: 20px;
+}
+
+/* Stil za dugme za prijavu */
+.login-form .MuiButton-root {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Poruka o grešci */
+.login-form .error-message {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
