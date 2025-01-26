@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
-import { Box, Grid, Typography, TextField, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
+import { Box, Grid, Typography, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
 import { petsData } from '../data/pets';
 import PetCard from '../components/PetCard';
 
 const SearchResults = () => {
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState('');
   const [selectedOrigin, setSelectedOrigin] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedAge, setSelectedAge] = useState('');
   const [selectedPrice, setSelectedPrice] = useState('');
-
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value.toLowerCase());
-  };
 
   const handleTypeChange = (e) => {
     setSelectedType(e.target.value);
@@ -40,12 +35,6 @@ const SearchResults = () => {
   const sizes = [...new Set(petsData.map((pet) => pet.size))];
 
   const filteredPets = petsData.filter((pet) => {
-    const matchesSearch =
-      searchQuery === '' ||
-      Object.values(pet).some((value) =>
-        value.toString().toLowerCase().includes(searchQuery)
-      );
-
     const matchesType = selectedType === '' || pet.type === selectedType;
     const matchesOrigin = selectedOrigin === '' || pet.origin === selectedOrigin;
     const matchesSize = selectedSize === '' || pet.size === selectedSize;
@@ -63,7 +52,6 @@ const SearchResults = () => {
       (selectedPrice === 'high' && pet.price > 15000);
 
     return (
-      matchesSearch &&
       matchesType &&
       matchesOrigin &&
       matchesSize &&
@@ -75,7 +63,7 @@ const SearchResults = () => {
   return (
     <Box sx={{ padding: 2 }}>
       <Typography variant="h4" gutterBottom>
-        Dobrodošli u Pet Store
+        Pretražite ljubimce po vašoj meri
       </Typography>
 
       <Box
@@ -87,14 +75,6 @@ const SearchResults = () => {
           flexWrap: 'wrap',
         }}
       >
-        <TextField
-          placeholder="Pretražite ljubimce po nazivu, opisu..."
-          variant="outlined"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          sx={{ flexGrow: 1 }}
-        />
-
         <FormControl variant="outlined" sx={{ minWidth: 150 }}>
           <InputLabel>Vrsta</InputLabel>
           <Select value={selectedType} onChange={handleTypeChange} label="Vrsta">

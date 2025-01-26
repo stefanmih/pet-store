@@ -83,7 +83,7 @@ const PetDetails = () => {
             <ListItem key={index}>
               <Box sx={{ width: '100%' }}>
                 <Typography variant="subtitle1">
-                  <strong>Korisnik:</strong> {review.username || 'Nepoznato'}
+                  <strong>Korisnik:</strong> {review.username || JSON.parse(localStorage.getItem("users")).filter((user)=>{return String(user.id) === String(review.userId)})[0].name}
                 </Typography>
                 <Rating value={review.rating} readOnly />
                 <Typography variant="body2">{review.text}</Typography>

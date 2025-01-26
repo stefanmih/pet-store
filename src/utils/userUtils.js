@@ -8,8 +8,11 @@ export const getCurrentUsername = () => {
   return user?.name || 'Nepoznat korisnik';
 };
 
+export const setCurrentUsername = (user) => {
+  localStorage.setItem('loggedUser', JSON.stringify(user));
+};
+
 export const getCurrentUserId = () => {
-  // Pretpostavka da korisnikova prijava čuva userId u localStorage
   return parseInt(localStorage.getItem('currentUserId'), 10);
 };
 

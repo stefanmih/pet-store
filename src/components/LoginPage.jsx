@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, Typography } from '@mui/material';
+import { TextField, Button, Box, Typography, Link } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../utils/cookie';
-import { setCurrentUserId } from '../utils/userUtils';
+import { setCurrentUserId, setCurrentUsername } from '../utils/userUtils';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  // Dohvatanje prethodne putanje iz localStorage
+  let previousPath = localStorage.getItem('previousPath') || '/';
 
   const login = () => {
     const users = JSON.parse(localStorage.getItem('users')) || []; // Dohvata korisnike iz localStorage
@@ -15,8 +20,15 @@ const LoginPage = () => {
     );
     if (user) {
       setCookie('isLoggedIn', 'true', 1); // Postavlja cookie
+      setCurrentUsername(user);
       setCurrentUserId(user.id); // Postavlja trenutni ID korisnika
-      window.location.href = '/'; // Preusmerava na početnu stranicu
+      localStorage.removeItem('previousPath'); // Briše prethodnu putanju nakon prijave
+      if (previousPath === '/login') {
+        previousPath = '/';
+      }
+      // Preusmeravanje i osvežavanje
+      navigate(previousPath, { replace: true });
+      window.location.reload(); // Osvežava stranicu kako bi učitala novo stanje
     } else {
       setError('Neispravno korisničko ime ili lozinka');
     }
@@ -51,6 +63,12 @@ const LoginPage = () => {
         <Button variant="contained" color="primary" onClick={login} fullWidth>
           Prijavi se
         </Button>
+        <Typography variant="body2" align="center" sx={{ marginTop: '10px' }}>
+          Nemate nalog?{' '}
+          <Link onClick={() => navigate('/register')} style={{ cursor: 'pointer' }}>
+            Registrujte se
+          </Link>
+        </Typography>
       </Box>
     </div>
   );

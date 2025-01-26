@@ -259,7 +259,7 @@ const CartPage = () => {
               variant="contained"
               color="error"
               onClick={() => handleRemoveReservation(reservation.id)} // Dugme za uklanjanje cele narudžbine
-              sx={{ marginTop: 2 }}
+              sx={{ marginTop: 2, visibility: (!(String(reservation.status) === "preuzeto") ? "hidden" : "" )}}
             >
               Ukloni Narudžbinu
             </Button>

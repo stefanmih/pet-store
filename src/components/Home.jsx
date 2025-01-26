@@ -22,7 +22,7 @@ const Home = () => {
       {/* Istaknuti ljubimci */}
       <Box sx={{ marginTop: 4 }}>
         <Typography variant="h4" gutterBottom>
-          Istaknuti ljubimci
+          Naša preporuka
         </Typography>
         <Grid container spacing={2}>
           {featuredPets.map((pet) => (
