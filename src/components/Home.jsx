@@ -1,12 +1,25 @@
 import React from 'react';
-import { Box, Typography, Grid, Card, CardMedia, CardContent, Button } from '@mui/material';
+import { Box, Typography, Grid, Card, CardMedia, CardContent, Button, Chip } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { petsData } from '../data/pets';
 
 const Home = () => {
   const navigate = useNavigate();
 
-  const featuredPets = petsData.slice(0, 4);
+  // Izračunavanje prosečne ocene za svakog ljubimca
+  const calculateAverageRating = (reviews) =>
+    reviews && reviews.length > 0
+      ? reviews.reduce((total, review) => total + review.rating, 0) / reviews.length
+      : 0;
+
+  // Dodavanje prosečne ocene svakom ljubimcu i sortiranje po oceni
+  const petsWithRatings = petsData.map((pet) => ({
+    ...pet,
+    averageRating: calculateAverageRating(pet.reviews),
+  }));
+  const featuredPets = petsWithRatings
+    .sort((a, b) => b.averageRating - a.averageRating) // Sortiraj po prosečnoj oceni
+    .slice(0, 4); // Prikaži samo prva 4 ljubimca
 
   return (
     <Box sx={{ padding: 2 }}>
@@ -24,7 +37,13 @@ const Home = () => {
         <Grid container spacing={2}>
           {featuredPets.map((pet) => (
             <Grid item xs={12} sm={6} md={3} key={pet.id}>
-              <Card>
+              <Card
+                sx={{
+                  position: 'relative', // Omogućava apsolutni položaj za ocenu
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                }}
+              >
                 <CardMedia
                   component="img"
                   height="200"
@@ -48,6 +67,20 @@ const Home = () => {
                     Detalji
                   </Button>
                 </CardContent>
+                {/* Prosečna ocena u donjem desnom uglu */}
+                {pet.averageRating > 0 && (
+                  <Chip
+                    label={`⭐ ${pet.averageRating.toFixed(1)}`}
+                    sx={{
+                      position: 'absolute',
+                      bottom: 8,
+                      right: 8,
+                      backgroundColor: '#ffc107',
+                      color: '#fff',
+                      fontWeight: 'bold',
+                    }}
+                  />
+                )}
               </Card>
             </Grid>
           ))}

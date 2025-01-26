@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, Button, CardMedia, Box } from '@mui/material';
+import { Card, CardContent, Typography, Button, CardMedia, Box, Chip } from '@mui/material';
 import { useCart } from './CartContext';
 import { useNavigate } from 'react-router';
 import { useNotification } from './NotificationProvider';
@@ -9,19 +9,26 @@ const PetCard = ({ pet }) => {
     const navigate = useNavigate();
     const { showInfo } = useNotification();
 
+    // Prosečna ocena iz recenzija
+    const averageRating =
+        pet.reviews && pet.reviews.length > 0
+            ? pet.reviews.reduce((total, review) => total + review.rating, 0) / pet.reviews.length
+            : null;
+
     const handleAddToCart = () => {
         const uniquePet = {
             ...pet,
             uniqueId: `${pet.id}-${Date.now()}-${Math.random()}`,
         };
         addToCart(uniquePet);
-        showInfo("Dodato u korpu", "success")
+        showInfo("Dodato u korpu", "success");
     };
 
     return (
         <Card
             sx={{
                 maxWidth: 320,
+                position: 'relative', // Dodajemo relativni položaj da bismo koristili apsolutni položaj za ocenu
                 transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                 '&:hover': {
                     transform: 'translateY(-10px)',
@@ -31,6 +38,21 @@ const PetCard = ({ pet }) => {
                 borderRadius: '12px',
             }}
         >
+            {/* Ocena u gornjem desnom uglu */}
+            {averageRating !== null && (
+                <Chip
+                    label={`⭐ ${averageRating.toFixed(1)}`}
+                    sx={{
+                        position: 'absolute',
+                        top: 8,
+                        right: 8,
+                        backgroundColor: '#ffc107',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                    }}
+                />
+            )}
+
             <CardMedia
                 component="img"
                 height="200"
@@ -60,7 +82,9 @@ const PetCard = ({ pet }) => {
                     <Button
                         variant="contained"
                         color="success"
-                        sx={{ marginTop: 2 }} onClick={handleAddToCart}>
+                        sx={{ marginTop: 2 }}
+                        onClick={handleAddToCart}
+                    >
                         Dodaj u korpu
                     </Button>
                 </Box>

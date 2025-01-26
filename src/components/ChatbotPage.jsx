@@ -66,7 +66,7 @@ const ChatbotPage = () => {
 
         const botResponse = await sendMessageToAPI(userInput);
 
-        if (botResponse.toLowerCase().includes("dodao") || botResponse.toLowerCase().includes("dodat")) {
+        if (botResponse.toLowerCase().includes("dodao") || botResponse.toLowerCase().includes("dodat") || botResponse.toLowerCase().includes("dodata") || botResponse.toLowerCase().includes("dodana") || botResponse.toLowerCase().includes("dodan")) {
             const pets = JSON.parse(localStorage.getItem("pets")) || [];
             const pet = pets.find((p) => botResponse.toLowerCase().includes(p.name.toLowerCase()));
             if (pet) {
