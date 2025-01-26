@@ -63,7 +63,7 @@ const SearchBar = () => {
         InputProps={{
           style: {
             color: "white", 
-            borderRadius: "8px", 
+            borderRadius: "20px", 
           },
         }}
         InputLabelProps={{
