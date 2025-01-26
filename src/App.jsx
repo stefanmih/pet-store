@@ -20,6 +20,8 @@ import Footer from './components/Footer';
 import RegisterPage from './components/RegisterPage';
 import { getCurrentUsername, setCurrentUserId, setCurrentUsername } from './utils/userUtils';
 import SearchBar from './components/SearchBar';
+import ChatbotPage from './components/ChatbotPage';
+import { Assistant } from '@mui/icons-material';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -126,6 +128,10 @@ const App = () => {
             <ShoppingCartIcon sx={{ marginRight: 2 }} />
             <ListItemText>Korpa</ListItemText>
           </ListItemButton>
+          <ListItemButton onClick={() => navigate('/chat')}>
+            <Assistant sx={{ marginRight: 2 }} />
+            <ListItemText>Asistent</ListItemText>
+          </ListItemButton>
           <ListItemButton onClick={() => navigate('/profile')}>
             <AccountCircleIcon sx={{ marginRight: 2 }} />
             <ListItemText>Profil</ListItemText>
@@ -165,6 +171,7 @@ const App = () => {
             <Route path="/pets/:id" element={<PetDetails />} />
             <Route path="/rate/:id" element={<ReviewPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/chat" element={<ChatbotPage />} />
           </Routes>
         </main>
       </Box>

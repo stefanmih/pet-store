@@ -59,7 +59,7 @@ const PetCard = ({ pet }) => {
                     </Button>
                     <Button
                         variant="contained"
-                        color="primary"
+                        color="success"
                         sx={{ marginTop: 2 }} onClick={handleAddToCart}>
                         Dodaj u korpu
                     </Button>

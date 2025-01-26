@@ -144,8 +144,8 @@ const CartPage = () => {
       </Typography>
       <List>
         {Array.isArray(cart) && cart.length > 0 ? (
-          cart.map((pet) => (
-            <ListItem key={pet.uniqueId}>
+          cart.map((pet, index) => (
+            <ListItem key={pet.uniqueId || `cart-item-${index}`}>
               <ListItemText primary={pet.name} secondary={`Cena: ${pet.price}`} />
               <Button
                 onClick={() => navigate(`/pets/${pet.id}`)} // Dugme za detalje
@@ -155,7 +155,7 @@ const CartPage = () => {
                 Detalji
               </Button>
               <Button
-                onClick={() => removeFromCart(pet.uniqueId)}
+                onClick={() => removeFromCart(pet.uniqueId || `cart-item-${index}`)}
                 color="secondary"
               >
                 Ukloni
@@ -219,8 +219,8 @@ const CartPage = () => {
             </Typography>
             <List sx={{ marginLeft: 2 }}>
               {Array.isArray(reservation.pets) &&
-                reservation.pets.map((pet) => (
-                  <ListItem key={pet.uniqueId}>
+                reservation.pets.map((pet, index) => (
+                  <ListItem key={pet.uniqueId || `${pet.id}-${index}`}>
                     <ListItemText
                       primary={pet.name}
                       secondary={`Cena: ${pet.price}, Vrsta: ${pet.type}, Starost: ${pet.age}, Velicina: ${pet.size}`}
@@ -234,7 +234,12 @@ const CartPage = () => {
                     </Button>
                     {reservation.status === 'u toku' && (
                       <Button
-                        onClick={() => handleRemovePetFromReservation(reservation.id, pet.uniqueId)}
+                        onClick={() =>
+                          handleRemovePetFromReservation(
+                            reservation.id,
+                            pet.uniqueId || `${pet.id}-${index}`
+                          )
+                        }
                         color="secondary"
                         sx={{ marginLeft: 2 }}
                       >
@@ -259,7 +264,11 @@ const CartPage = () => {
               variant="contained"
               color="error"
               onClick={() => handleRemoveReservation(reservation.id)} // Dugme za uklanjanje cele narudžbine
-              sx={{ marginTop: 2, visibility: (!(String(reservation.status) === "preuzeto") ? "hidden" : "" )}}
+              sx={{
+                marginTop: 2,
+                visibility:
+                  !(String(reservation.status) === 'preuzeto') ? 'hidden' : '',
+              }}
             >
               Ukloni Narudžbinu
             </Button>
