@@ -27,7 +27,7 @@ const ChatbotPage = () => {
 
     const sendMessageToAPI = async (message) => {
         try {
-            const apiKey = ""; // Zameni svojim OpenAI API ključem
+            const apiKey = "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"; // Zameni svojim OpenAI API ključem
             const pets = JSON.parse(localStorage.getItem("pets")) || []; // Dohvati ljubimce iz localStorage
             const response = await axios.post(
                 "https://api.openai.com/v1/chat/completions",
