@@ -6,6 +6,7 @@ import App from './App'; // Tvoj glavni App komponenta
 import { CartProvider } from './components/CartContext';
 import { NotificationProvider } from './components/NotificationProvider';
 import { initializeLocalStorage } from './data/LocalStorageManagement';
+import Footer from './components/Footer';
 
 const root = ReactDOM.createRoot(document.getElementById('root')); // Kreira root za React 18+
 initializeLocalStorage();
@@ -14,7 +15,8 @@ root.render(
     <CartProvider>
       <BrowserRouter>
         <NotificationProvider>
-            <App />
+          <App />
+          <Footer />
         </NotificationProvider>
       </BrowserRouter>
     </CartProvider>

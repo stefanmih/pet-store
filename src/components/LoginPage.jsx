@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import { setCookie } from '../utils/cookie';
-import { users } from '../data/users'; // Pretpostavljamo da postoji fajl sa korisnicima
 import { setCurrentUserId } from '../utils/userUtils';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
   const login = () => {
+    const users = JSON.parse(localStorage.getItem('users')) || []; // Dohvata korisnike iz localStorage
     const user = users.find(
       (u) => u.username === username && u.password === password
     );
     if (user) {
-      setCookie('isLoggedIn', 'true', 1);
-      setCurrentUserId(user.id); // Postavljamo trenutni ID korisnika
-      window.location.href = '/';
+      setCookie('isLoggedIn', 'true', 1); // Postavlja cookie
+      setCurrentUserId(user.id); // Postavlja trenutni ID korisnika
+      window.location.href = '/'; // Preusmerava na početnu stranicu
     } else {
       setError('Neispravno korisničko ime ili lozinka');
     }
@@ -42,7 +43,11 @@ const LoginPage = () => {
           fullWidth
           sx={{ marginBottom: '10px' }}
         />
-        {error && <Typography className="error-message">{error}</Typography>}
+        {error && (
+          <Typography color="error" className="error-message" sx={{ marginBottom: '10px' }}>
+            {error}
+          </Typography>
+        )}
         <Button variant="contained" color="primary" onClick={login} fullWidth>
           Prijavi se
         </Button>

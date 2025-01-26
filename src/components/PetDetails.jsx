@@ -11,11 +11,13 @@ import {
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useCart } from './CartContext';
+import { useNotification } from './NotificationProvider';
 
 const PetDetails = () => {
   const { id } = useParams();
   const { addToCart } = useCart(); // Koristi addPetToReservation iz konteksta
   const [pet, setPet] = useState(null);
+  const { showInfo } = useNotification();
 
   useEffect(() => {
     const petsFromStorage = JSON.parse(localStorage.getItem('pets')) || [];
@@ -29,6 +31,7 @@ const PetDetails = () => {
       uniqueId: `${pet.id}-${Date.now()}-${Math.random()}`,
     };
     addToCart(uniquePet);
+    showInfo("Dodato u korpu", "success")
   };
 
   if (!pet) {

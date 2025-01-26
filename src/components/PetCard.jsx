@@ -2,10 +2,12 @@ import React from 'react';
 import { Card, CardContent, Typography, Button, CardMedia, Box } from '@mui/material';
 import { useCart } from './CartContext';
 import { useNavigate } from 'react-router';
+import { useNotification } from './NotificationProvider';
 
 const PetCard = ({ pet }) => {
     const { addToCart } = useCart();
     const navigate = useNavigate();
+    const { showInfo } = useNotification();
 
     const handleAddToCart = () => {
         const uniquePet = {
@@ -13,6 +15,7 @@ const PetCard = ({ pet }) => {
             uniqueId: `${pet.id}-${Date.now()}-${Math.random()}`,
         };
         addToCart(uniquePet);
+        showInfo("Dodato u korpu", "success")
     };
 
     return (

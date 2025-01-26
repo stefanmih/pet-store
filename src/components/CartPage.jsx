@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { getCurrentUserId } from '../utils/userUtils';
+import { useNotification } from './NotificationProvider';
 
 const CartPage = () => {
   const {
@@ -32,6 +33,7 @@ const CartPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const currentUserId = getCurrentUserId();
   const navigate = useNavigate();
+  const { showInfo } = useNotification();
 
   const calculateTotalPrice = (items) =>
     Array.isArray(items) ? items.reduce((total, item) => total + item.price, 0) : 0;
@@ -42,7 +44,7 @@ const CartPage = () => {
 
   const handleAddToReservation = () => {
     if (!selectedReservation) {
-      alert('Izaberite narudžbinu ili kreirajte novu.');
+      showInfo('Izaberite narudžbinu ili kreirajte novu.', 'error');
       return;
     }
 
@@ -54,15 +56,15 @@ const CartPage = () => {
       const updatedPets = [...(reservationToUpdate.pets || []), ...cart];
       updateReservation(selectedReservation, updatedPets);
       clearCart(); // Isprazni korpu
-      alert('Dodato u postojeću narudžbinu.');
+      showInfo('Dodato u postojeću narudžbinu.', 'success');
     } else {
-      alert('Narudžbina nije pronađena.');
+      showInfo('Narudžbina nije pronađena.', 'error');
     }
   };
 
   const handleCreateNewReservation = () => {
     if (!cart.length) {
-      alert('Korpa je prazna.');
+      showInfo('Korpa je prazna.', 'error');
       return;
     }
 
@@ -78,7 +80,7 @@ const CartPage = () => {
 
     addReservation(newReservation);
     clearCart(); // Isprazni korpu
-    alert('Nova narudžbina kreirana.');
+    showInfo('Nova narudžbina kreirana.', 'success');
   };
 
   const handleSearch = (query) => {

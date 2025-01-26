@@ -1,24 +1,35 @@
 export const users = [
-    {
-      id: 1,
-      username: 'korisnik',
-      password: 'lozinka',
-      name: 'Petar Petrović',
-      role: 'Kupac',
-    },
-    {
-      id: 2,
-      username: 'ana123',
-      password: 'sifra',
-      name: 'Ana Anić',
-      role: 'kupac',
-    },
-    {
-      id: 3,
-      username: 'marko',
-      password: 'marko2023',
-      name: 'Marko Marković',
-      role: 'Kupac',
-    },
-  ];
-  
+  {
+    id: 1,
+    username: 'korisnik',
+    password: 'lozinka',
+    name: 'Petar Petrović',
+    role: 'Kupac',
+    email: 'petar.petrovic@example.com',
+    phone: '+381612345678',
+    address: 'Bulevar Kralja Aleksandra 12, Beograd',
+    favoritePets: ['Psi', 'Mačke'], // Omiljene vrste ljubimaca
+  },
+  {
+    id: 2,
+    username: 'ana123',
+    password: 'sifra',
+    name: 'Ana Anić',
+    role: 'Kupac',
+    email: 'ana.anic@example.com',
+    phone: '+381632345678',
+    address: 'Novi Sad, Zmaj Jovina 34',
+    favoritePets: ['Ptice'],
+  },
+  {
+    id: 3,
+    username: 'marko',
+    password: 'marko2023',
+    name: 'Marko Marković',
+    role: 'Kupac',
+    email: 'marko.markovic@example.com',
+    phone: '+381652345678',
+    address: 'Niš, Voždova 22',
+    favoritePets: ['Ribice', 'Reptili'],
+  },
+];
