@@ -69,7 +69,6 @@ const ChatbotPage = () => {
 
         const botResponse = await sendMessageToAPI(userInput);
 
-        // Obrada specifičnih odgovora bota
         if (botResponse.toLowerCase().includes("dodao") || botResponse.toLowerCase().includes("dodat")) {
             const pets = JSON.parse(localStorage.getItem("pets")) || [];
             const pet = pets.find((p) => botResponse.toLowerCase().includes(p.name.toLowerCase()));
