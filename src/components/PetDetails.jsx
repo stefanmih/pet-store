@@ -14,7 +14,7 @@ import { useCart } from './CartContext';
 
 const PetDetails = () => {
   const { id } = useParams();
-  const { reservations, addReservation, updateReservation } = useCart();
+  const { addToCart } = useCart(); // Koristi addPetToReservation iz konteksta
   const [pet, setPet] = useState(null);
 
   useEffect(() => {
@@ -24,33 +24,11 @@ const PetDetails = () => {
   }, [id]);
 
   const handleAddToCart = () => {
-    if (pet) {
-      const cartReservationId = 'cart';
-
-      // Proveri da li korpa postoji
-      const cartReservation = reservations.find(
-        (reservation) => reservation.id === cartReservationId
-      );
-
-      const uniquePet = {
-        ...pet,
-        uniqueId: `${pet.id}-${Date.now()}-${Math.random()}`,
-      };
-
-      if (!cartReservation) {
-        // Kreiraj novu korpu ako ne postoji
-        addReservation({
-          id: cartReservationId,
-          userId: null,
-          status: 'korpa',
-          pets: [uniquePet],
-        });
-      } else {
-        // Dodaj ljubimca u postojeću korpu
-        const updatedPets = [...(cartReservation.pets || []), uniquePet];
-        updateReservation(cartReservationId, updatedPets);
-      }
-    }
+    const uniquePet = {
+      ...pet,
+      uniqueId: `${pet.id}-${Date.now()}-${Math.random()}`,
+    };
+    addToCart(uniquePet);
   };
 
   if (!pet) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useCart } from './CartContext';
 import {
   Typography,
@@ -19,23 +19,19 @@ import { getCurrentUserId } from '../utils/userUtils';
 
 const CartPage = () => {
   const {
+    cart,
     reservations,
-    removeReservation,
-    updateReservation,
     addReservation,
+    updateReservation,
+    removeReservation,
+    clearCart,
+    removeFromCart,
   } = useCart();
 
   const [selectedReservation, setSelectedReservation] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const [cart, setCart] = useState(
-    JSON.parse(localStorage.getItem('cart')) || []
-  );
   const currentUserId = getCurrentUserId();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }, [cart]);
 
   const calculateTotalPrice = (items) =>
     Array.isArray(items) ? items.reduce((total, item) => total + item.price, 0) : 0;
@@ -57,7 +53,7 @@ const CartPage = () => {
     if (reservationToUpdate) {
       const updatedPets = [...(reservationToUpdate.pets || []), ...cart];
       updateReservation(selectedReservation, updatedPets);
-      setCart([]); // Isprazni korpu
+      clearCart(); // Isprazni korpu
       alert('Dodato u postojeću narudžbinu.');
     } else {
       alert('Narudžbina nije pronađena.');
@@ -81,7 +77,7 @@ const CartPage = () => {
     };
 
     addReservation(newReservation);
-    setCart([]); // Isprazni korpu
+    clearCart(); // Isprazni korpu
     alert('Nova narudžbina kreirana.');
   };
 
@@ -89,16 +85,25 @@ const CartPage = () => {
     setSearchQuery(query.toLowerCase());
   };
 
+  const handleRatePet = (petId) => {
+    navigate(`/rate/${petId}`); // Navigacija na stranicu za ocenjivanje
+  };
+
   const handleRemovePetFromReservation = (reservationId, uniqueId) => {
     const reservationToUpdate = reservations.find((res) => res.id === reservationId);
     if (!reservationToUpdate) return;
 
     const updatedPets = reservationToUpdate.pets.filter((pet) => pet.uniqueId !== uniqueId);
-    updateReservation(reservationId, updatedPets);
+
+    if (updatedPets.length === 0) {
+      removeReservation(reservationId); // Automatski ukloni narudžbinu ako nema ljubimaca
+    } else {
+      updateReservation(reservationId, updatedPets);
+    }
   };
 
-  const handleRatePet = (petId) => {
-    navigate(`/rate/${petId}`); // Navigacija na stranicu za ocenjivanje
+  const handleRemoveReservation = (reservationId) => {
+    removeReservation(reservationId); // Ručno uklanjanje cele narudžbine
   };
 
   const filteredReservations = userReservations.filter((reservation) => {
@@ -137,14 +142,18 @@ const CartPage = () => {
       </Typography>
       <List>
         {Array.isArray(cart) && cart.length > 0 ? (
-          cart.map((pet, index) => (
-            <ListItem key={pet.uniqueId || `${pet.id}-${index}`}>
+          cart.map((pet) => (
+            <ListItem key={pet.uniqueId}>
               <ListItemText primary={pet.name} secondary={`Cena: ${pet.price}`} />
               <Button
-                onClick={() => {
-                  const updatedCart = cart.filter((_, i) => i !== index);
-                  setCart(updatedCart);
-                }}
+                onClick={() => navigate(`/pets/${pet.id}`)} // Dugme za detalje
+                color="primary"
+                sx={{ marginRight: 2 }}
+              >
+                Detalji
+              </Button>
+              <Button
+                onClick={() => removeFromCart(pet.uniqueId)}
                 color="secondary"
               >
                 Ukloni
@@ -214,6 +223,22 @@ const CartPage = () => {
                       primary={pet.name}
                       secondary={`Cena: ${pet.price}, Vrsta: ${pet.type}, Starost: ${pet.age}, Velicina: ${pet.size}`}
                     />
+                    <Button
+                      onClick={() => navigate(`/pets/${pet.id}`)} // Dugme za detalje
+                      color="primary"
+                      sx={{ marginRight: 2 }}
+                    >
+                      Detalji
+                    </Button>
+                    {reservation.status === 'u toku' && (
+                      <Button
+                        onClick={() => handleRemovePetFromReservation(reservation.id, pet.uniqueId)}
+                        color="secondary"
+                        sx={{ marginLeft: 2 }}
+                      >
+                        Ukloni
+                      </Button>
+                    )}
                     {reservation.status === 'preuzeto' && (
                       <Button
                         variant="outlined"
@@ -224,30 +249,18 @@ const CartPage = () => {
                         Oceni
                       </Button>
                     )}
-                    {reservation.status === 'u toku' && (
-                      <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() =>
-                          handleRemovePetFromReservation(reservation.id, pet.uniqueId)
-                        }
-                        sx={{ marginLeft: 2 }}
-                      >
-                        Ukloni ljubimca
-                      </Button>
-                    )}
                   </ListItem>
                 ))}
             </List>
 
-            {reservation.status === 'preuzeto' && (
-              <Button
-                onClick={() => removeReservation(reservation.id)}
-                color="secondary"
-              >
-                Ukloni Narudžbinu
-              </Button>
-            )}
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => handleRemoveReservation(reservation.id)} // Dugme za uklanjanje cele narudžbine
+              sx={{ marginTop: 2 }}
+            >
+              Ukloni Narudžbinu
+            </Button>
             <Divider sx={{ marginTop: 2 }} />
           </Box>
         ))}
