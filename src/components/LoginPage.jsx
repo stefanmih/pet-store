@@ -8,7 +8,6 @@ const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
   const login = () => {
     const user = users.find(
       (u) => u.username === username && u.password === password

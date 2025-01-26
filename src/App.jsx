@@ -20,7 +20,6 @@ const App = () => {
   const [open, setOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-
   // Provera statusa logovanja samo pri inicijalnom učitavanju
   useEffect(() => {
     const loggedInStatus = getCookie('isLoggedIn');

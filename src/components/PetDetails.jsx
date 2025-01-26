@@ -3,31 +3,53 @@ import {
   Box,
   Typography,
   Button,
-  List,
-  ListItem,
   CardMedia,
   Divider,
   Rating,
+  List,
+  ListItem,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { petsData } from '../data/pets';
 import { useCart } from './CartContext';
-import { users } from '../data/users';
 
 const PetDetails = () => {
   const { id } = useParams();
-  const { addToCart } = useCart();
+  const { reservations, addReservation, updateReservation } = useCart();
   const [pet, setPet] = useState(null);
 
   useEffect(() => {
-    // Pronađi ljubimca iz `petsData`
-    const foundPet = petsData.find((p) => p.id === parseInt(id));
+    const petsFromStorage = JSON.parse(localStorage.getItem('pets')) || [];
+    const foundPet = petsFromStorage.find((p) => p.id === parseInt(id));
     setPet(foundPet || null);
   }, [id]);
 
   const handleAddToCart = () => {
     if (pet) {
-      addToCart(pet); // Dodaj ljubimca u korpu
+      const cartReservationId = 'cart';
+
+      // Proveri da li korpa postoji
+      const cartReservation = reservations.find(
+        (reservation) => reservation.id === cartReservationId
+      );
+
+      const uniquePet = {
+        ...pet,
+        uniqueId: `${pet.id}-${Date.now()}-${Math.random()}`,
+      };
+
+      if (!cartReservation) {
+        // Kreiraj novu korpu ako ne postoji
+        addReservation({
+          id: cartReservationId,
+          userId: null,
+          status: 'korpa',
+          pets: [uniquePet],
+        });
+      } else {
+        // Dodaj ljubimca u postojeću korpu
+        const updatedPets = [...(cartReservation.pets || []), uniquePet];
+        updateReservation(cartReservationId, updatedPets);
+      }
     }
   };
 
@@ -43,7 +65,7 @@ const PetDetails = () => {
     <Box sx={{ padding: 4, maxWidth: '800px', margin: 'auto' }}>
       <CardMedia
         component="img"
-        height="300"
+        height="500"
         image={pet.image}
         alt={pet.name}
         sx={{ objectFit: 'cover', marginBottom: 2, borderRadius: '8px' }}
@@ -77,10 +99,10 @@ const PetDetails = () => {
       {pet.reviews && pet.reviews.length > 0 ? (
         <List>
           {pet.reviews.map((review, index) => (
-            <ListItem key={index} alignItems="flex-start">
+            <ListItem key={index}>
               <Box sx={{ width: '100%' }}>
                 <Typography variant="subtitle1">
-                  <strong>Korisnik: </strong> {users.find((user) => String(user.id) === String(review.userId)).name}
+                  <strong>Korisnik:</strong> {review.username || 'Nepoznato'}
                 </Typography>
                 <Rating value={review.rating} readOnly />
                 <Typography variant="body2">{review.text}</Typography>
@@ -90,14 +112,12 @@ const PetDetails = () => {
           ))}
         </List>
       ) : (
-        <Typography variant="body2">Još uvek nema recenzija za ovog ljubimca.</Typography>
+        <Typography variant="body2">
+          Još uvek nema recenzija za ovog ljubimca.
+        </Typography>
       )}
       <Box sx={{ marginTop: 2, display: 'flex', gap: 2 }}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => window.history.back()}
-        >
+        <Button variant="contained" color="primary" onClick={() => window.history.back()}>
           Nazad
         </Button>
         <Button variant="contained" color="secondary" onClick={handleAddToCart}>

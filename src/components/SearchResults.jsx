@@ -75,7 +75,7 @@ const SearchResults = () => {
   return (
     <Box sx={{ padding: 2 }}>
       <Typography variant="h4" gutterBottom>
-        Dobrodošli u prodavnicu ljubimaca
+        Dobrodošli u Pet Store
       </Typography>
 
       <Box

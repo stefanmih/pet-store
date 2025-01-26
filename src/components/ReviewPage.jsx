@@ -1,47 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { TextField, Button, Typography, Box, Rating } from '@mui/material';
 import { getCurrentUserId, getCurrentUsername } from '../utils/userUtils';
-import { useCart } from './CartContext';
+import { useNotification } from './NotificationProvider';
 
 const ReviewPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const userId = getCurrentUserId();
   const username = getCurrentUsername();
-  const { updateReservationReviews } = useCart();
+  const { showInfo } = useNotification();
 
   const [reviewText, setReviewText] = useState('');
   const [rating, setRating] = useState(0);
+  const [pet, setPet] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    const petsFromStorage = JSON.parse(localStorage.getItem('pets')) || [];
+    const foundPet = petsFromStorage.find((p) => p.id === parseInt(id));
+    if (foundPet) {
+      setPet(foundPet);
+    } else {
+      showInfo('Ljubimac nije pronađen.', 'error');
+      navigate(-1); // Vrati korisnika na prethodnu stranicu ako ljubimac ne postoji
+    }
+  }, [id, navigate, showInfo]);
 
   const handleAddReview = () => {
     if (!reviewText.trim() || rating === 0) {
-      alert('Molimo unesite recenziju i ocenu.');
+      showInfo('Molimo unesite recenziju i ocenu.', 'warning');
       return;
     }
 
-    if (!isSubmitting) {
-      setIsSubmitting(true); // Spreči višestruke klikove
-      const newReview = {
-        userId,
-        username: username,
-        text: reviewText,
-        rating: rating,
-      };
+    if (isSubmitting) return;
 
-      console.log(`Dodavanje recenzije za ljubimca ${id}:`, newReview);
-      updateReservationReviews(parseInt(id), newReview); // Ažuriraj recenzije
-      alert('Recenzija uspešno dodata!');
-      navigate(`/pets/${id}`); // Vrati korisnika na stranicu ljubimca
+    setIsSubmitting(true); // Spreči višestruke klikove
+
+    const newReview = {
+      userId,
+      username: username,
+      text: reviewText,
+      rating: rating,
+    };
+
+    try {
+      const petsFromStorage = JSON.parse(localStorage.getItem('pets')) || [];
+      const updatedPets = petsFromStorage.map((p) =>
+        p.id === parseInt(id)
+          ? { ...p, reviews: [...(p.reviews || []), newReview] }
+          : p
+      );
+
+      localStorage.setItem('pets', JSON.stringify(updatedPets));
+      showInfo('Recenzija uspešno dodata!', 'success');
+      navigate(-1); // Vrati korisnika na prethodnu stranicu
+    } catch (error) {
+      console.error('Greška prilikom dodavanja recenzije:', error);
+      showInfo('Došlo je do greške prilikom dodavanja recenzije.', 'error');
+    } finally {
       setIsSubmitting(false); // Omogući ponovno slanje
     }
   };
 
+  if (!pet) {
+    return null; // Prazan prikaz dok se ljubimac ne učita
+  }
+
   return (
     <Box sx={{ padding: 2 }}>
       <Typography variant="h5" gutterBottom>
-        Oceni ljubimca
+        Oceni ljubimca: {pet.name}
       </Typography>
       <Rating
         value={rating}
