@@ -68,7 +68,7 @@ const ReviewPage = () => {
   }
 
   return (
-    <Box sx={{ padding: 2 }}>
+    <Box sx={{ padding: 2}}>
       <Typography variant="h5" gutterBottom>
         Oceni ljubimca: {pet.name}
       </Typography>

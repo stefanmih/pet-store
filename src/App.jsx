@@ -15,6 +15,7 @@ import SearchResults from './components/SearchResults';
 import LoginPage from './components/LoginPage';
 import PetDetails from './components/PetDetails';
 import ReviewPage from './components/ReviewPage';
+import Footer from './components/Footer';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -130,9 +131,11 @@ const App = () => {
         sx={{
           flexGrow: 1,
           marginTop: '50px',
+          marginBottom: '50px',
           marginLeft: open ? 0 : 0, // Ovaj deo neće pomeriti sadržaj
           padding: '20px',
           transition: 'none', // Nema animacije za sadržaj
+          position: "relative"
         }}
       >
         <main>
@@ -147,6 +150,7 @@ const App = () => {
           </Routes>
         </main>
       </Box>
+      <Footer />
     </div>
   );
 };
