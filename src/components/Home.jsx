@@ -6,12 +6,10 @@ import { petsData } from '../data/pets';
 const Home = () => {
   const navigate = useNavigate();
 
-  // Uzeti prvih 4 ljubimca za prikaz na početnoj strani
   const featuredPets = petsData.slice(0, 4);
 
   return (
     <Box sx={{ padding: 2 }}>
-      {/* Dobrodošlica */}
       <Typography variant="h3" gutterBottom align="center">
         Dobrodošli u Pet Store
       </Typography>
@@ -19,7 +17,6 @@ const Home = () => {
         Pronađite savršenog ljubimca za vašu porodicu!
       </Typography>
 
-      {/* Istaknuti ljubimci */}
       <Box sx={{ marginTop: 4 }}>
         <Typography variant="h4" gutterBottom>
           Naša preporuka
@@ -57,7 +54,6 @@ const Home = () => {
         </Grid>
       </Box>
 
-      {/* Sekcija preporuka */}
       <Box sx={{ marginTop: 6, textAlign: 'center' }}>
         <Typography variant="h4" gutterBottom>
           Zašto odabrati nas?
@@ -70,7 +66,6 @@ const Home = () => {
         </Typography>
       </Box>
 
-      {/* Poziv na akciju */}
       <Box sx={{ marginTop: 6, textAlign: 'center' }}>
         <Typography variant="h5" gutterBottom>
           Pretražite našu kolekciju i pronađite idealnog ljubimca!

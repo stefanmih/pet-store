@@ -4,17 +4,15 @@ import axios from "axios";
 import { useCart } from "./CartContext";
 
 const ChatbotPage = () => {
-    const [messages, setMessages] = useState([]); // Poruke između korisnika i bota
-    const [userInput, setUserInput] = useState(""); // Tekst korisnika
-    const [isLoading, setIsLoading] = useState(false); // Indikator učitavanja
+    const [messages, setMessages] = useState([]);
+    const [userInput, setUserInput] = useState(""); 
+    const [isLoading, setIsLoading] = useState(false); 
     const apiKey = process.env.REACT_APP_OPENAPI;
-    const { addToCart } = useCart(); // Funkcija za dodavanje ljubimaca u korpu
+    const { addToCart } = useCart();
     useEffect(() => {
-        // Dohvati sačuvane poruke iz localStorage
         const savedMessages = JSON.parse(localStorage.getItem("chatMessages")) || [];
         setMessages(savedMessages);
 
-        // Ako nema poruka, dodaj inicijalnu poruku
         if (savedMessages.length === 0) {
             const initialMessage = {
                 sender: "bot",
@@ -27,7 +25,7 @@ const ChatbotPage = () => {
 
     const sendMessageToAPI = async (message) => {
         try {
-            const pets = JSON.parse(localStorage.getItem("pets")) || []; // Dohvati ljubimce iz localStorage
+            const pets = JSON.parse(localStorage.getItem("pets")) || [];
             const response = await axios.post(
                 "https://api.openai.com/v1/chat/completions",
                 {
@@ -49,7 +47,7 @@ const ChatbotPage = () => {
                     },
                 }
             );
-            return response.data.choices[0].message.content; // Odgovor bota
+            return response.data.choices[0].message.content;
         } catch (error) {
             console.error("Greška pri slanju poruke:", error);
             return "Nažalost, trenutno ne mogu da odgovorim na vaše pitanje.";
@@ -72,7 +70,7 @@ const ChatbotPage = () => {
             const pets = JSON.parse(localStorage.getItem("pets")) || [];
             const pet = pets.find((p) => botResponse.toLowerCase().includes(p.name.toLowerCase()));
             if (pet) {
-                addToCart(pet); // Dodaj ljubimca u korpu
+                addToCart(pet); 
                 const updatedWithBotMessage = [
                     ...updatedMessages,
                     { sender: "bot", text: `Ljubimac ${pet.name} je dodat u vašu korpu.` },
@@ -84,7 +82,6 @@ const ChatbotPage = () => {
             }
         }
 
-        // Generički odgovor bota
         const updatedWithBotMessage = [...updatedMessages, { sender: "bot", text: botResponse }];
         setMessages(updatedWithBotMessage);
         localStorage.setItem("chatMessages", JSON.stringify(updatedWithBotMessage));
@@ -119,7 +116,6 @@ const ChatbotPage = () => {
             >
                 {messages.map((msg, index) => {
                     const formatMessage = (text) => {
-                        // Zameni "**rec**" sa HTML oznakom za boldovanje
                         const boldedText = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
                         return boldedText;
                     };

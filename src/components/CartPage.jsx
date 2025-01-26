@@ -55,7 +55,7 @@ const CartPage = () => {
     if (reservationToUpdate) {
       const updatedPets = [...(reservationToUpdate.pets || []), ...cart];
       updateReservation(selectedReservation, updatedPets);
-      clearCart(); // Isprazni korpu
+      clearCart();
       showInfo('Dodato u postojeću narudžbinu.', 'success');
     } else {
       showInfo('Narudžbina nije pronađena.', 'error');
@@ -79,7 +79,7 @@ const CartPage = () => {
     };
 
     addReservation(newReservation);
-    clearCart(); // Isprazni korpu
+    clearCart();
     showInfo('Nova narudžbina kreirana.', 'success');
   };
 
@@ -88,7 +88,7 @@ const CartPage = () => {
   };
 
   const handleRatePet = (petId) => {
-    navigate(`/rate/${petId}`); // Navigacija na stranicu za ocenjivanje
+    navigate(`/rate/${petId}`);
   };
 
   const handleRemovePetFromReservation = (reservationId, uniqueId) => {
@@ -98,14 +98,14 @@ const CartPage = () => {
     const updatedPets = reservationToUpdate.pets.filter((pet) => pet.uniqueId !== uniqueId);
 
     if (updatedPets.length === 0) {
-      removeReservation(reservationId); // Automatski ukloni narudžbinu ako nema ljubimaca
+      removeReservation(reservationId);
     } else {
       updateReservation(reservationId, updatedPets);
     }
   };
 
   const handleRemoveReservation = (reservationId) => {
-    removeReservation(reservationId); // Ručno uklanjanje cele narudžbine
+    removeReservation(reservationId);
   };
 
   const filteredReservations = userReservations.filter((reservation) => {
@@ -148,7 +148,7 @@ const CartPage = () => {
             <ListItem key={pet.uniqueId || `cart-item-${index}`}>
               <ListItemText primary={pet.name} secondary={`Cena: ${pet.price}`} />
               <Button
-                onClick={() => navigate(`/pets/${pet.id}`)} // Dugme za detalje
+                onClick={() => navigate(`/pets/${pet.id}`)}
                 color="primary"
                 sx={{ marginRight: 2 }}
               >
@@ -226,7 +226,7 @@ const CartPage = () => {
                       secondary={`Cena: ${pet.price}, Vrsta: ${pet.type}, Starost: ${pet.age}, Velicina: ${pet.size}`}
                     />
                     <Button
-                      onClick={() => navigate(`/pets/${pet.id}`)} // Dugme za detalje
+                      onClick={() => navigate(`/pets/${pet.id}`)} 
                       color="primary"
                       sx={{ marginRight: 2 }}
                     >
@@ -263,7 +263,7 @@ const CartPage = () => {
             <Button
               variant="contained"
               color="error"
-              onClick={() => handleRemoveReservation(reservation.id)} // Dugme za uklanjanje cele narudžbine
+              onClick={() => handleRemoveReservation(reservation.id)}
               sx={{
                 marginTop: 2,
                 visibility:

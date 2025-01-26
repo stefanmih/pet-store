@@ -60,7 +60,6 @@ export const CartProvider = ({ children }) => {
       );
   
       if (!reservationExists) {
-        // Kreiraj novu rezervaciju ako ne postoji
         return [
           ...prevReservations,
           {
@@ -71,7 +70,6 @@ export const CartProvider = ({ children }) => {
           },
         ];
       } else {
-        // Dodaj ljubimca u postojeću rezervaciju
         return prevReservations.map((reservation) =>
           reservation.id === reservationId
             ? { ...reservation, pets: [...reservation.pets, pet] }

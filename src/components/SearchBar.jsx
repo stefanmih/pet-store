@@ -4,8 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredPets, setFilteredPets] = useState([]); // Filtrirani ljubimci
-  const dropdownRef = useRef(null); // Referenca za dropdown
+  const [filteredPets, setFilteredPets] = useState([]); 
+  const dropdownRef = useRef(null); 
   const navigate = useNavigate();
   const location = useLocation();
   const isLoginPage = location.pathname === '/login';
@@ -14,7 +14,6 @@ const SearchBar = () => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
 
-    // Dohvatanje ljubimaca iz localStorage i filtriranje
     const pets = JSON.parse(localStorage.getItem("pets")) || [];
     const filtered = pets.filter(
       (pet) =>
@@ -32,13 +31,13 @@ const SearchBar = () => {
   };
 
   const handlePetSelect = (petId) => {
-    setFilteredPets([]); // Zatvori dropdown
-    navigate(`/pets/${petId}`); // Preusmeri na detalje ljubimca
+    setFilteredPets([]);
+    navigate(`/pets/${petId}`); 
   };
 
   const handleClickOutside = (e) => {
     if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-      setFilteredPets([]); // Zatvori dropdown
+      setFilteredPets([]); 
     }
   };
 
@@ -53,7 +52,7 @@ const SearchBar = () => {
     <Box
       position="relative"
       sx={{ height: "1vh", width: "80vh", marginLeft: "150px", visibility: isLoginPage || isRegisterPage ? "hidden" : "" }}
-      ref={dropdownRef} // Povezujemo referencu sa komponentom
+      ref={dropdownRef}
     >
       <TextField
         label="Pretraži ljubimce"
@@ -63,12 +62,12 @@ const SearchBar = () => {
         autoComplete="off"
         InputProps={{
           style: {
-            color: "white", // Bela slova
-            borderRadius: "8px", // Zaobljene ivice
+            color: "white", 
+            borderRadius: "8px", 
           },
         }}
         InputLabelProps={{
-          style: { color: "white" }, // Bela boja za labelu
+          style: { color: "white" }, 
         }}
         sx={{
           marginBottom: "10px",

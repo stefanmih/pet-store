@@ -10,25 +10,23 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Dohvatanje prethodne putanje iz localStorage
   let previousPath = localStorage.getItem('previousPath') || '/';
 
   const login = () => {
-    const users = JSON.parse(localStorage.getItem('users')) || []; // Dohvata korisnike iz localStorage
+    const users = JSON.parse(localStorage.getItem('users')) || [];
     const user = users.find(
       (u) => u.username === username && u.password === password
     );
     if (user) {
-      setCookie('isLoggedIn', 'true', 1); // Postavlja cookie
+      setCookie('isLoggedIn', 'true', 1); 
       setCurrentUsername(user);
-      setCurrentUserId(user.id); // Postavlja trenutni ID korisnika
-      localStorage.removeItem('previousPath'); // Briše prethodnu putanju nakon prijave
+      setCurrentUserId(user.id); 
+      localStorage.removeItem('previousPath'); 
       if (previousPath === '/login') {
         previousPath = '/';
       }
-      // Preusmeravanje i osvežavanje
       navigate(previousPath, { replace: true });
-      window.location.reload(); // Osvežava stranicu kako bi učitala novo stanje
+      window.location.reload(); 
     } else {
       setError('Neispravno korisničko ime ili lozinka');
     }

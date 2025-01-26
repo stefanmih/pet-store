@@ -23,7 +23,7 @@ const ReviewPage = () => {
       setPet(foundPet);
     } else {
       showInfo('Ljubimac nije pronađen.', 'error');
-      navigate(-1); // Vrati korisnika na prethodnu stranicu ako ljubimac ne postoji
+      navigate(-1); 
     }
   }, [id, navigate, showInfo]);
 
@@ -35,7 +35,7 @@ const ReviewPage = () => {
 
     if (isSubmitting) return;
 
-    setIsSubmitting(true); // Spreči višestruke klikove
+    setIsSubmitting(true);
 
     const newReview = {
       userId,
@@ -54,17 +54,17 @@ const ReviewPage = () => {
 
       localStorage.setItem('pets', JSON.stringify(updatedPets));
       showInfo('Recenzija uspešno dodata!', 'success');
-      navigate(-1); // Vrati korisnika na prethodnu stranicu
+      navigate(-1); 
     } catch (error) {
       console.error('Greška prilikom dodavanja recenzije:', error);
       showInfo('Došlo je do greške prilikom dodavanja recenzije.', 'error');
     } finally {
-      setIsSubmitting(false); // Omogući ponovno slanje
+      setIsSubmitting(false);
     }
   };
 
   if (!pet) {
-    return null; // Prazan prikaz dok se ljubimac ne učita
+    return null; 
   }
 
   return (

@@ -1,5 +1,4 @@
 export const setCurrentUserId = (userId) => {
-  // Postavlja ID korisnika u localStorage
   localStorage.setItem('currentUserId', userId);
 };
 

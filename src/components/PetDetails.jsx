@@ -15,7 +15,7 @@ import { useNotification } from './NotificationProvider';
 
 const PetDetails = () => {
   const { id } = useParams();
-  const { addToCart } = useCart(); // Koristi addPetToReservation iz konteksta
+  const { addToCart } = useCart();
   const [pet, setPet] = useState(null);
   const { showInfo } = useNotification();
 

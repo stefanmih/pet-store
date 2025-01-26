@@ -86,7 +86,7 @@ const App = () => {
           <Box sx={{ flexGrow: 1000, display: "flex", justifyContent: "center", marginX: 2 , marginY: 4}}>
           <SearchBar />
         </Box>
-          <Box sx={{ flexGrow: 1,}} /> {/* Prazan Box za razdvajanje */}
+          <Box sx={{ flexGrow: 1,}} /> 
           <Typography variant="h6" sx= {{visibility: isLoggedIn ? "" : "hidden"}}>
             Zdravo, <span style={{ fontWeight: 'bold' }}>{getCurrentUsername()}</span>
           </Typography>
@@ -111,7 +111,7 @@ const App = () => {
             top: 0,
             left: 0,
             display: 'flex',
-            flexDirection: 'column', // Dodato za poravnanje
+            flexDirection: 'column',
           },
         }}
       >

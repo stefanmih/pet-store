@@ -4,7 +4,7 @@ import { useNotification } from './NotificationProvider';
 import { getCurrentUserId, updateUser } from '../utils/userUtils';
 
 const ProfilePage = () => {
-  const userId = getCurrentUserId(); // Pretpostavka da imate ovu funkciju
+  const userId = getCurrentUserId(); 
   const user = JSON.parse(localStorage.getItem('users')).find((u) => u.id === userId);
 
   const [name, setName] = useState(user?.name || '');
@@ -19,7 +19,7 @@ const ProfilePage = () => {
 
   const handleSaveProfile = () => {
     const updatedUser = { ...user, name, email, phone, address, favoritePets };
-    updateUser(userId, updatedUser); // Funkcija koja ažurira korisnika u localStorage
+    updateUser(userId, updatedUser); 
     showInfo('Profil je uspešno ažuriran!', 'success');
   };
 
@@ -35,7 +35,7 @@ const ProfilePage = () => {
     }
 
     const updatedUser = { ...user, password: newPassword };
-    updateUser(userId, updatedUser); // Funkcija koja ažurira korisnika u localStorage
+    updateUser(userId, updatedUser); 
     showInfo('Lozinka je uspešno promenjena.', 'success');
     setOldPassword('');
     setNewPassword('');

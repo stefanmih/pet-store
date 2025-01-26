@@ -1,18 +1,15 @@
 import React, { createContext, useContext, useState } from 'react';
 import { Snackbar, Alert } from '@mui/material';
 
-// Kreiramo kontekst za obaveštenja
 const NotificationContext = createContext();
 
-// Provider komponenta za upravljanje obaveštenjima
 export const NotificationProvider = ({ children }) => {
   const [notification, setNotification] = useState({
     open: false,
     message: '',
-    severity: 'info', // info, success, warning, error
+    severity: 'info', 
   });
 
-  // Funkcija za prikazivanje obaveštenja
   const showInfo = (message, severity = 'info') => {
     setNotification({
       open: true,
@@ -21,7 +18,6 @@ export const NotificationProvider = ({ children }) => {
     });
   };
 
-  // Funkcija za zatvaranje obaveštenja
   const closeNotification = () => {
     setNotification((prev) => ({ ...prev, open: false }));
   };
@@ -43,5 +39,4 @@ export const NotificationProvider = ({ children }) => {
   );
 };
 
-// Custom hook za korišćenje obaveštenja
 export const useNotification = () => useContext(NotificationContext);

@@ -8,7 +8,7 @@ export const users = [
     email: 'petar.petrovic@example.com',
     phone: '+381612345678',
     address: 'Bulevar Kralja Aleksandra 12, Beograd',
-    favoritePets: ['Psi', 'Mačke'], // Omiljene vrste ljubimaca
+    favoritePets: ['Psi', 'Mačke'], 
   },
   {
     id: 2,

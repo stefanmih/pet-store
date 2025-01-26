@@ -1,7 +1,7 @@
 export const setCookie = (name, value, hours) => {
     const date = new Date();
-    date.setTime(date.getTime() + hours * 60 * 60 * 1000); // Dodaj broj sati u trenutni timestamp
-    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`; // Obavezno dodaj path=/
+    date.setTime(date.getTime() + hours * 60 * 60 * 1000); 
+    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`; 
 };
 
 
